@@ -16,7 +16,6 @@
         from HISTORYNUMERICTRENDRECORD
         where HISTORY_ID = #{historyId}
           and `TIMESTAMP` >= #{timeStamp}
-          and `TIMESTAMP` % 60000=0
         order by id desc limit 10
     </select>
     <select id="countAllByHistoryId" resultType="java.lang.Integer">
