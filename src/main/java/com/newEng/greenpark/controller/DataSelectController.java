@@ -22,15 +22,15 @@ public class DataSelectController {
         this.dataSelectService = dataSelectService;
     }
 
-    /**
-     * @param name historyID
-     * @description 根据historyID获取数据
-     */
-    @GetMapping("/data/get")
-    public CommonResult<DoubleChartResult> getData(@RequestParam String name) {
-        log.info("[Get]getData param = " + name);
-        return dataSelectService.getData(name);
-    }
+//    /**
+//     * @param name historyID
+//     * @description 根据historyID获取数据
+//     */
+//    @GetMapping("/data/get")
+//    public CommonResult<DoubleChartResult> getData(@RequestParam String name) {
+//        log.info("[Get]getData param = " + name);
+//        return dataSelectService.getData(name);
+//    }
 
     @GetMapping("/data/two")
     public CommonResult<TwoDoubleChartResult> getTwoData() {

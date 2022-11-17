@@ -12,4 +12,5 @@ public class PredictChartResult {
     private List<Double> realValueList;
     private List<Double> SecondPvList;
     private List<Double> SecondErrorList;
+    private List<String> dayTimeList;
 }

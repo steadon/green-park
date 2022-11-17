@@ -8,7 +8,7 @@ import com.newEng.greenpark.POJO.dto.vo.AllChartArgsVo;
 import java.util.List;
 
 public interface FunctionService {
-    CommonResult<PredictChartResult> predict(String name);
+    CommonResult<PredictChartResult> predict();
 
     CommonResult<Double> carbonEqual();
 

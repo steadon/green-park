@@ -33,7 +33,7 @@ public class FunctionServiceImpl implements FunctionService {
     private Double lastSecondPredictParam = 0.0;
 
     @Override
-    public CommonResult<PredictChartResult> predict(String historyId) {
+    public CommonResult<PredictChartResult> predict() {
         //预测对象
         SecondSmoothingEntity vo = new SecondSmoothingEntity();
 
@@ -41,6 +41,7 @@ public class FunctionServiceImpl implements FunctionService {
         if (carbonDaysAsc == null) return CommonResult.fail("无样本数据");
         //抽取value集合
         List<Double> collect = carbonDaysAsc.stream().map(CarbonDay::getValue).collect(Collectors.toList());
+        List<String> timeCollect = carbonDaysAsc.stream().map(CarbonDay::getDayTime).collect(Collectors.toList());
         //lastPV赋值
         if (lastSinglePredictParam == 0.0) lastSinglePredictParam = collect.get(0) - 0.1;
         if (lastSecondPredictParam == 0.0) lastSecondPredictParam = collect.get(0) - 0.1;
@@ -54,7 +55,7 @@ public class FunctionServiceImpl implements FunctionService {
         List<Double> realValue = voList.stream().map(PredictVo::getRealValue).collect(Collectors.toList());
         List<Double> secondPv = voList.stream().map(PredictVo::getSecondPv).collect(Collectors.toList());
         List<Double> secondError = voList.stream().map(PredictVo::getSecondError).collect(Collectors.toList());
-        PredictChartResult result = new PredictChartResult(lastSecondPv, realValue, secondPv, secondError);
+        PredictChartResult result = new PredictChartResult(lastSecondPv, realValue, secondPv, secondError,timeCollect);
         return CommonResult.success(result);
     }
 
@@ -94,15 +95,15 @@ public class FunctionServiceImpl implements FunctionService {
         long startTime = CalendarUtil.getStartTime();
         //保留两位小数
         DecimalFormat df = new DecimalFormat("0.0000");
-        Double loadEnergyValue = Double.valueOf(df.format(numberDomainMapper.selectOne(generatorPower).getValue()));
+        Double generatorPowerValue = Double.valueOf(df.format(numberDomainMapper.selectOne(generatorPower).getValue()));
         Double loadPowerValue = Double.valueOf(df.format(numberDomainMapper.selectOne(loadPower).getValue()));
-        Double differenceA = Double.valueOf(df.format(numberDomainMapper.selectOneByHistoryId(loadEnergy, startTime)));
-        Double differenceB = Double.valueOf(df.format(numberDomainMapper.selectOneByHistoryId(generatorEnergy, startTime)));
+        Double loadEnergyValue = Double.valueOf(df.format(numberDomainMapper.selectOneByHistoryId(loadEnergy, startTime)));
+        Double generatorEnergyValue = Double.valueOf(df.format(numberDomainMapper.selectOneByHistoryId(generatorEnergy, startTime)));
         List<Double> list = new ArrayList<>();
-        list.add(loadEnergyValue);
+        list.add(generatorPowerValue);
         list.add(loadPowerValue);
-        list.add(differenceA);
-        list.add(differenceB);
+        list.add(generatorEnergyValue);
+        list.add(loadEnergyValue);
         AllChartArgsVo vo = new AllChartArgsVo(list);
         return CommonResult.success(vo);
     }
