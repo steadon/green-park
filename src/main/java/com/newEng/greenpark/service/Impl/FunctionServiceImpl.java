@@ -12,10 +12,12 @@ import com.newEng.greenpark.service.FunctionService;
 import com.newEng.greenpark.utils.CalculateUtil;
 import com.newEng.greenpark.utils.CalendarUtil;
 import com.newEng.greenpark.utils.SwitchUtil;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,7 +34,15 @@ public class FunctionServiceImpl implements FunctionService {
 
     private Double lastSecondPredictParam = 0.0;
 
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+    //保留两位小数
+    DecimalFormat dfd = new DecimalFormat("0.00");
+
+    private static final int day = 24 * 60 * 60 * 1000;
+
     @Override
+    @SneakyThrows
     public CommonResult<PredictChartResult> predict() {
         //预测对象
         SecondSmoothingEntity vo = new SecondSmoothingEntity();
@@ -55,7 +65,12 @@ public class FunctionServiceImpl implements FunctionService {
         List<Double> realValue = voList.stream().map(PredictVo::getRealValue).collect(Collectors.toList());
         List<Double> secondPv = voList.stream().map(PredictVo::getSecondPv).collect(Collectors.toList());
         List<Double> secondError = voList.stream().map(PredictVo::getSecondError).collect(Collectors.toList());
-        PredictChartResult result = new PredictChartResult(lastSecondPv, realValue, secondPv, secondError,timeCollect);
+        lastSecondPv.add(Double.valueOf(dfd.format(secondPv.get(secondPv.size() - 1))));
+        String s = timeCollect.get(timeCollect.size() - 1);
+        long time = df.parse(s).getTime();
+        timeCollect.add(df.format(time + day));
+
+        PredictChartResult result = new PredictChartResult(lastSecondPv, realValue, secondPv, secondError, timeCollect);
         return CommonResult.success(result);
     }
 
@@ -76,14 +91,13 @@ public class FunctionServiceImpl implements FunctionService {
         String generatorEnergy = SwitchUtil.switchForName("GENERATOR_ENERGY");
         //获取当天0点时间戳
         long startTime = CalendarUtil.getStartTime();
-        //保留两位小数
-        DecimalFormat df = new DecimalFormat("0.00");
+
         //查询极差
         Double differenceA = numberDomainMapper.selectOneByHistoryId(loadEnergy, startTime);
         Double differenceB = numberDomainMapper.selectOneByHistoryId(generatorEnergy, startTime);
         if (differenceA == null || differenceB == null) return -1.0;
         double carbon = (differenceA + differenceB) * 0.785;
-        return Double.parseDouble(df.format(carbon));
+        return Double.parseDouble(dfd.format(carbon));
     }
 
     public CommonResult<AllChartArgsVo> getAllChartArgs() {
