@@ -1,0 +1,39 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newEng.greenpark.mapper.NumberDomainMapper">
+    <resultMap id="BaseResultMap" type="com.newEng.greenpark.POJO.domain.NumberDomain">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="HISTORY_ID" jdbcType="VARCHAR" property="historyId"/>
+        <result column="TIMESTAMP" jdbcType="BIGINT" property="timeStamp"/>
+        <result column="VALUE" jdbcType="DOUBLE" property="value"/>
+    </resultMap>
+    <delete id="deleteHalf">
+        delete
+        from HISTORYNUMERICTRENDRECORD
+        where HISTORY_ID = #{historyId} order by ID asc limit 500
+    </delete>
+    <select id="selectByHistoryId" resultMap="BaseResultMap">
+        select *
+        from HISTORYNUMERICTRENDRECORD
+        where HISTORY_ID = #{historyId}
+          and `TIMESTAMP` >= #{timeStamp}
+          and `TIMESTAMP` % 60000=0
+        order by id desc limit 10
+    </select>
+    <select id="countAllByHistoryId" resultType="java.lang.Integer">
+        select count(*)
+        from HISTORYNUMERICTRENDRECORD
+        where HISTORY_ID = #{historyId}
+    </select>
+    <select id="selectOneByHistoryId" resultType="java.lang.Double">
+        select MAX(`VALUE`) - MIN(`VALUE`)
+        from HISTORYNUMERICTRENDRECORD
+        where HISTORY_ID = #{historyId}
+          and `TIMESTAMP` >= #{timeStamp}
+    </select>
+    <select id="selectOne" resultType="com.newEng.greenpark.POJO.domain.NumberDomain">
+        select *
+        from HISTORYNUMERICTRENDRECORD
+        where HISTORY_ID = #{historyId}
+        order by id desc limit 1
+    </select>
+</mapper>

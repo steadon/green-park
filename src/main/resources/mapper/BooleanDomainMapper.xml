@@ -1,0 +1,28 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newEng.greenpark.mapper.BooleanDomainMapper">
+    <resultMap id="BaseResultMap" type="com.newEng.greenpark.POJO.domain.BooleanDomain">
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="HISTORY_ID" jdbcType="VARCHAR" property="historyId"/>
+        <result column="TIMESTAMP" jdbcType="BIGINT" property="timeStamp"/>
+        <result column="VALUE" jdbcType="TINYINT" property="value"/>
+    </resultMap>
+    <delete id="deleteHalf">
+        delete
+        from HISTORYBOOLEANTRENDRECORD
+        where HISTORY_ID = #{historyId} order by ID asc limit 500
+    </delete>
+
+    <select id="selectByHistoryId" resultType="java.lang.Integer">
+        select `VALUE`
+        from HISTORYBOOLEANTRENDRECORD
+        where HISTORY_ID = #{historyId}
+        order by id desc limit 1
+    </select>
+    <select id="countAllByHistoryId" resultType="java.lang.Integer">
+        select count(*)
+        from HISTORYBOOLEANTRENDRECORD
+        where HISTORY_ID = #{historyId}
+    </select>
+
+
+</mapper>

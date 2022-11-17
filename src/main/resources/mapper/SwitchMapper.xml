@@ -1,0 +1,20 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newEng.greenpark.mapper.SwitchMapper">
+    <resultMap id="BaseResultMap" type="com.newEng.greenpark.POJO.domain.Switch">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="status" jdbcType="BIGINT" property="status"/>
+    </resultMap>
+    <update id="updateById">
+        update switch
+        set `status` = #{newStatus},
+            `count`= #{count}
+        where `name` = #{historyId}
+    </update>
+    <select id="selectForCount" resultType="java.lang.Integer">
+        select `count`
+        from switch
+        where `name` = #{historyId} limit 1
+    </select>
+
+</mapper>
