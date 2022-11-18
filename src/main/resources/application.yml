@@ -6,9 +6,9 @@ spring:
     name: greenpark
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://43.143.162.177/greenpark?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
-    username: root
-    password: weibingrui1808.
+    url: jdbc:mysql://localhost/greenpark?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username:
+    password:
   redis:
     host: localhost
     port: 6379
