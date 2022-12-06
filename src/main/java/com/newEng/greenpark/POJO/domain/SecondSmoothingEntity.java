@@ -1,4 +1,4 @@
-package com.newEng.greenpark.POJO.dto.vo;
+package com.newEng.greenpark.POJO.domain;
 
 
 import lombok.Data;

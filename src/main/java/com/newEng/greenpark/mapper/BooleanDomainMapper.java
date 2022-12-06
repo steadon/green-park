@@ -6,6 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface BooleanDomainMapper {
     Integer selectByHistoryId(String historyId);
     Integer countAllByHistoryId(String historyId);
-
     Integer deleteHalf(String historyId);
 }

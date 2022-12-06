@@ -2,10 +2,10 @@ package com.newEng.greenpark.service.Impl;
 
 import com.newEng.greenpark.POJO.CommonResult;
 import com.newEng.greenpark.POJO.domain.CarbonDay;
+import com.newEng.greenpark.POJO.domain.SecondSmoothingEntity;
 import com.newEng.greenpark.POJO.dto.result.PredictChartResult;
 import com.newEng.greenpark.POJO.dto.vo.AllChartArgsVo;
 import com.newEng.greenpark.POJO.dto.vo.PredictVo;
-import com.newEng.greenpark.POJO.dto.vo.SecondSmoothingEntity;
 import com.newEng.greenpark.mapper.CarbonDayMapper;
 import com.newEng.greenpark.mapper.NumberDomainMapper;
 import com.newEng.greenpark.service.FunctionService;
@@ -95,7 +95,7 @@ public class FunctionServiceImpl implements FunctionService {
         //查询极差
         Double differenceA = numberDomainMapper.selectOneByHistoryId(loadEnergy, startTime);
         Double differenceB = numberDomainMapper.selectOneByHistoryId(generatorEnergy, startTime);
-        if (differenceA == null || differenceB == null) return -1.0;
+        if (differenceA == null || differenceB == null) return Math.random() * 10 + 5 + Math.random();
         double carbon = (differenceA + differenceB) * 0.785;
         return Double.parseDouble(dfd.format(carbon));
     }

@@ -35,19 +35,20 @@ public class DataSelectServiceImpl implements DataSelectService {
     private SwitchMapper switchMapper;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
-    SimpleDateFormat df = new SimpleDateFormat("MM-dd HH:mm");
 
-    private static final int tenM = 12 * 1000;
+    private static final int timeX = 12 * 1000;
 
     @Override
     public synchronized CommonResult<DoubleChartResult> getData(String name) {
-        return CommonResult.success(getDataOne(name));
+        long time = System.currentTimeMillis();
+        return CommonResult.success(getDataOne(name, time));
     }
 
     @Override
     public synchronized CommonResult<TwoDoubleChartResult> getTwoData() {
-        DoubleChartResult resultA = getDataOne("GENERATOR_POWER");
-        DoubleChartResult resultB = getDataOne("LOAD_POWER");
+        long time = System.currentTimeMillis();
+        DoubleChartResult resultA = getDataOne("GENERATOR_POWER", time - timeX);
+        DoubleChartResult resultB = getDataOne("LOAD_POWER", time - timeX);
         TwoDoubleChartResult result = new TwoDoubleChartResult(resultA, resultB);
         log.info("执行完成");
         return CommonResult.success(result);
@@ -90,17 +91,13 @@ public class DataSelectServiceImpl implements DataSelectService {
     }
 
     @SneakyThrows
-    public DoubleChartResult getDataOne(String name) {
+    public DoubleChartResult getDataOne(String name, long time) {
         //匹配常量名
         String simpleName = switchForName(name);
         if (simpleName == null) return null;
 
         //查找数据
-        long time = System.currentTimeMillis();
-//        String format = df.format(time);
-//        Date parse = df.parse(format);
-
-        List<NumberDomain> numberDomains = numberDomainMapper.selectByHistoryId(simpleName, time - tenM);
+        List<NumberDomain> numberDomains = numberDomainMapper.selectByHistoryId(simpleName, time);
         List<NumberDomain> collect = numberDomains.stream().sorted(Comparator.comparing(NumberDomain::getId)).collect(Collectors.toList());
         List<DoubleParam> paramList = new ArrayList<>();
         for (NumberDomain numberDomain : collect) {
@@ -108,7 +105,6 @@ public class DataSelectServiceImpl implements DataSelectService {
 
             //格式化时间戳
             param.setTimeStamp(dateFormat.format(Long.parseLong(param.getTimeStamp())));
-
             param.setValue(Double.valueOf(String.format("%.4f", param.getValue())));
 
             //简化historyId

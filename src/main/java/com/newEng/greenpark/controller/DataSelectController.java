@@ -3,7 +3,6 @@ package com.newEng.greenpark.controller;
 import com.newEng.greenpark.POJO.CommonResult;
 import com.newEng.greenpark.POJO.dto.param.DoubleParam;
 import com.newEng.greenpark.POJO.dto.param.UpdateParam;
-import com.newEng.greenpark.POJO.dto.result.DoubleChartResult;
 import com.newEng.greenpark.POJO.dto.result.TwoDoubleChartResult;
 import com.newEng.greenpark.service.DataSelectService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +20,6 @@ public class DataSelectController {
     public DataSelectController(DataSelectService dataSelectService) {
         this.dataSelectService = dataSelectService;
     }
-
-//    /**
-//     * @param name historyID
-//     * @description 根据historyID获取数据
-//     */
-//    @GetMapping("/data/get")
-//    public CommonResult<DoubleChartResult> getData(@RequestParam String name) {
-//        log.info("[Get]getData param = " + name);
-//        return dataSelectService.getData(name);
-//    }
 
     @GetMapping("/data/two")
     public CommonResult<TwoDoubleChartResult> getTwoData() {

@@ -1,7 +1,7 @@
 package com.newEng.greenpark.utils;
 
 import com.newEng.greenpark.POJO.dto.vo.PredictVo;
-import com.newEng.greenpark.POJO.dto.vo.SecondSmoothingEntity;
+import com.newEng.greenpark.POJO.domain.SecondSmoothingEntity;
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.DecimalFormat;

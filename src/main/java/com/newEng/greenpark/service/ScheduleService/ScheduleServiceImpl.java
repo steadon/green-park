@@ -69,7 +69,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         double carbonEqual = functionService.getCarbonEqual();
         double startTime = CalendarUtil.getStartTime();
-        if (carbonDayMapper.insert(carbonEqual, df.format(startTime - 1)) == 1) log.info("insert day-carbon succeed");
+        if (carbonDayMapper.insert(carbonEqual, df.format(startTime - 1000)) == 1) log.info("insert day-carbon succeed");
     }
 
     private void deleteIfNumOver(String name) {
