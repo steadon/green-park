@@ -9,6 +9,5 @@ import java.util.List;
 public interface CarbonDayMapper {
     Integer insert(Double value, String dayTime);
 
-    List<CarbonDay> selectNearTen();
     List<CarbonDay> selectNearSeven();
 }

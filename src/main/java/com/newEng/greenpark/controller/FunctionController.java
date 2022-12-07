@@ -33,4 +33,9 @@ public class FunctionController {
     public CommonResult<AllChartArgsVo> getAllChartArgs() {
         return functionService.getAllChartArgs();
     }
+
+    @GetMapping("/function/light")
+    public CommonResult<String> getLightStatus() {
+        return functionService.getLightStatus();
+    }
 }

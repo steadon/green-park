@@ -16,5 +16,7 @@ public interface FunctionService {
 
     CommonResult<AllChartArgsVo> getAllChartArgs();
 
+    CommonResult<String> getLightStatus();
+
     double getCarbonEqual();
 }

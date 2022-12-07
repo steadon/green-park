@@ -16,5 +16,10 @@
         from switch
         where `name` = #{historyId} limit 1
     </select>
+    <select id="selectForStatus" resultType="java.lang.Integer">
+        select `status`
+        from switch
+        where `name` = #{historyId} limit 1
+    </select>
 
 </mapper>

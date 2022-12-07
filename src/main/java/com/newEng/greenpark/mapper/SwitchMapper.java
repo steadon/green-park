@@ -7,4 +7,6 @@ public interface SwitchMapper {
     Integer updateById(String historyId, Integer newStatus, Integer count);
 
     Integer selectForCount(String historyId);
+
+    Integer selectForStatus(String historyId);
 }

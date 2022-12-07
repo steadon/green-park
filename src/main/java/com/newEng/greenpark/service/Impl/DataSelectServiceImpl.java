@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -35,14 +36,9 @@ public class DataSelectServiceImpl implements DataSelectService {
     private SwitchMapper switchMapper;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
+    DecimalFormat dfd = new DecimalFormat("0.00");
 
     private static final int timeX = 12 * 1000;
-
-    @Override
-    public synchronized CommonResult<DoubleChartResult> getData(String name) {
-        long time = System.currentTimeMillis();
-        return CommonResult.success(getDataOne(name, time));
-    }
 
     @Override
     public synchronized CommonResult<TwoDoubleChartResult> getTwoData() {
@@ -60,7 +56,10 @@ public class DataSelectServiceImpl implements DataSelectService {
         String simpleName = switchForName(name);
         if (simpleName == null) return CommonResult.fail("无相关数据");
         NumberDomain numberDomain = numberDomainMapper.selectOne(simpleName);
+        //格式化数据
         DoubleParam param = new DoubleParam(numberDomain);
+        //格式化数据
+        param.setValue(Double.valueOf(dfd.format(numberDomain.getValue())));
         return CommonResult.success(param);
     }
 

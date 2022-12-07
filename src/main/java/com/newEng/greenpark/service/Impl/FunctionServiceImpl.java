@@ -8,6 +8,7 @@ import com.newEng.greenpark.POJO.dto.vo.AllChartArgsVo;
 import com.newEng.greenpark.POJO.dto.vo.PredictVo;
 import com.newEng.greenpark.mapper.CarbonDayMapper;
 import com.newEng.greenpark.mapper.NumberDomainMapper;
+import com.newEng.greenpark.mapper.SwitchMapper;
 import com.newEng.greenpark.service.FunctionService;
 import com.newEng.greenpark.utils.CalculateUtil;
 import com.newEng.greenpark.utils.CalendarUtil;
@@ -29,6 +30,8 @@ public class FunctionServiceImpl implements FunctionService {
     NumberDomainMapper numberDomainMapper;
     @Resource
     CarbonDayMapper carbonDayMapper;
+    @Resource
+    SwitchMapper switchMapper;
 
     private Double lastSinglePredictParam = 0.0;
 
@@ -40,6 +43,7 @@ public class FunctionServiceImpl implements FunctionService {
     DecimalFormat dfd = new DecimalFormat("0.00");
 
     private static final int day = 24 * 60 * 60 * 1000;
+    private static final int hour = 60 * 60 * 1000;
 
     @Override
     @SneakyThrows
@@ -86,6 +90,7 @@ public class FunctionServiceImpl implements FunctionService {
         return carbonDays.stream().sorted(Comparator.comparing(CarbonDay::getId)).collect(Collectors.toList());
     }
 
+    @Override
     public double getCarbonEqual() {
         String loadEnergy = SwitchUtil.switchForName("LOAD_ENERGY");
         String generatorEnergy = SwitchUtil.switchForName("GENERATOR_ENERGY");
@@ -100,6 +105,7 @@ public class FunctionServiceImpl implements FunctionService {
         return Double.parseDouble(dfd.format(carbon));
     }
 
+    @Override
     public CommonResult<AllChartArgsVo> getAllChartArgs() {
         String loadEnergy = SwitchUtil.switchForName("LOAD_ENERGY");
         String loadPower = SwitchUtil.switchForName("LOAD_POWER");
@@ -120,5 +126,15 @@ public class FunctionServiceImpl implements FunctionService {
         list.add(loadEnergyValue);
         AllChartArgsVo vo = new AllChartArgsVo(list);
         return CommonResult.success(vo);
+    }
+
+    @Override
+    public CommonResult<String> getLightStatus() {
+        long startTime = CalendarUtil.getStartTime();
+        long nowTime = System.currentTimeMillis();
+        long betweenTime = nowTime - startTime;
+        if (switchMapper.selectForStatus("/DemoC/SwitchLightHandle") == 1) return CommonResult.success("光照良好");
+        else if (7 * hour <= betweenTime && betweenTime <= 17 * hour) return CommonResult.success("光照良好");
+        else return CommonResult.fail("光线不充足");
     }
 }
