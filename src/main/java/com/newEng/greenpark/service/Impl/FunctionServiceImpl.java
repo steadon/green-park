@@ -115,10 +115,20 @@ public class FunctionServiceImpl implements FunctionService {
         long startTime = CalendarUtil.getStartTime();
         //保留两位小数
         DecimalFormat df = new DecimalFormat("0.0000");
-        Double generatorPowerValue = Double.valueOf(df.format(numberDomainMapper.selectOne(generatorPower).getValue()));
-        Double loadPowerValue = Double.valueOf(df.format(numberDomainMapper.selectOne(loadPower).getValue()));
-        Double loadEnergyValue = Double.valueOf(df.format(numberDomainMapper.selectOneByHistoryId(loadEnergy, startTime)));
-        Double generatorEnergyValue = Double.valueOf(df.format(numberDomainMapper.selectOneByHistoryId(generatorEnergy, startTime)));
+        Double value1 = numberDomainMapper.selectOne(generatorPower).getValue();
+        Double value2 = numberDomainMapper.selectOne(loadPower).getValue();
+        Double value3 = numberDomainMapper.selectOneByHistoryId(loadEnergy, startTime);
+        Double value4 = numberDomainMapper.selectOneByHistoryId(generatorEnergy, startTime);
+        if (value1 == null) value1 = 0.00;
+        if (value2 == null) value2 = 0.00;
+        if (value3 == null) value3 = 0.00;
+        if (value4 == null) value4 = 0.00;
+        Double generatorPowerValue = Double.valueOf(df.format(value1));
+        Double loadPowerValue = Double.valueOf(df.format(value2));
+        Double loadEnergyValue = Double.valueOf(df.format(value3));
+        Double generatorEnergyValue = Double.valueOf(df.format(value4));
+
+
         List<Double> list = new ArrayList<>();
         list.add(generatorPowerValue);
         list.add(loadPowerValue);

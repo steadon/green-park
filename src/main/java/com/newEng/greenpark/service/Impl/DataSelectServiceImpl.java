@@ -105,6 +105,7 @@ public class DataSelectServiceImpl implements DataSelectService {
 
             //格式化时间戳
             param.setTimeStamp(dateFormat.format(Long.parseLong(param.getTimeStamp())));
+            if (param.getValue() == null) param.setValue(0.0000);
             param.setValue(Double.valueOf(String.format("%.4f", param.getValue())));
 
             //简化historyId
