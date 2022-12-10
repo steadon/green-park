@@ -137,4 +137,5 @@ public class FunctionServiceImpl implements FunctionService {
         else if (7 * hour <= betweenTime && betweenTime <= 17 * hour) return CommonResult.success("光照良好");
         else return CommonResult.fail("光线不充足");
     }
+
 }

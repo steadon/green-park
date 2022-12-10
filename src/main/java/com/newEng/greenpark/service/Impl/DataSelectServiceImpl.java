@@ -59,7 +59,8 @@ public class DataSelectServiceImpl implements DataSelectService {
         //格式化数据
         DoubleParam param = new DoubleParam(numberDomain);
         //格式化数据
-        param.setValue(Double.valueOf(dfd.format(numberDomain.getValue())));
+        if (numberDomain.getValue() != null) param.setValue(Double.valueOf(dfd.format(numberDomain.getValue())));
+        if (numberDomain.getValue() == null) param.setValue(0.00);
         return CommonResult.success(param);
     }
 
@@ -69,7 +70,7 @@ public class DataSelectServiceImpl implements DataSelectService {
         String simpleName = switchForName(name);
         if (simpleName == null) return CommonResult.fail("无相关数据");
 
-        Integer status = booleanDomainMapper.selectByHistoryId(simpleName);
+        Integer status = switchMapper.selectForStatus(simpleName);
         if (status == 1) return CommonResult.success("ON");
         if (status == 0) return CommonResult.success("OFF");
 
