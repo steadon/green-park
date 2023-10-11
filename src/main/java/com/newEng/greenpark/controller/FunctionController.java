@@ -1,8 +1,8 @@
 package com.newEng.greenpark.controller;
 
-import com.newEng.greenpark.POJO.CommonResult;
-import com.newEng.greenpark.POJO.dto.result.PredictChartResult;
-import com.newEng.greenpark.POJO.dto.vo.AllChartArgsVo;
+import com.newEng.greenpark.pojo.CommonResult;
+import com.newEng.greenpark.pojo.model.result.PredictChartResult;
+import com.newEng.greenpark.pojo.model.vo.AllChartArgsVo;
 import com.newEng.greenpark.service.FunctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

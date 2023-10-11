@@ -1,10 +1,10 @@
 package com.newEng.greenpark.service;
 
-import com.newEng.greenpark.POJO.CommonResult;
-import com.newEng.greenpark.POJO.dto.param.DoubleParam;
-import com.newEng.greenpark.POJO.dto.param.UpdateParam;
-import com.newEng.greenpark.POJO.dto.result.DoubleChartResult;
-import com.newEng.greenpark.POJO.dto.result.TwoDoubleChartResult;
+import com.newEng.greenpark.pojo.CommonResult;
+import com.newEng.greenpark.pojo.model.param.DoubleParam;
+import com.newEng.greenpark.pojo.model.param.UpdateParam;
+import com.newEng.greenpark.pojo.model.result.DoubleChartResult;
+import com.newEng.greenpark.pojo.model.result.TwoDoubleChartResult;
 
 public interface DataSelectService {
     CommonResult<DoubleChartResult> getData(String name);

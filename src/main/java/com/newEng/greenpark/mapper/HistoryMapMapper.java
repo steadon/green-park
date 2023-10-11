@@ -1,6 +1,6 @@
 package com.newEng.greenpark.mapper;
 
-import com.newEng.greenpark.POJO.domain.HistoryMap;
+import com.newEng.greenpark.pojo.domain.HistoryMap;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.newEng.greenpark.mapper.HistoryMapMapper">
-    <resultMap id="BaseResultMap" type="com.newEng.greenpark.POJO.domain.HistoryMap">
+    <resultMap id="BaseResultMap" type="com.newEng.greenpark.pojo.domain.HistoryMap">
         <id column="ID" jdbcType="INTEGER" property="id"/>
         <result column="ID_" jdbcType="VARCHAR" property="historyId"/>
     </resultMap>

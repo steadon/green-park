@@ -1,6 +1,6 @@
 package com.newEng.greenpark.mapper;
 
-import com.newEng.greenpark.POJO.domain.CarbonDay;
+import com.newEng.greenpark.pojo.domain.CarbonDay;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

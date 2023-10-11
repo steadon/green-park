@@ -1,6 +1,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.newEng.greenpark.mapper.NumberDomainMapper">
-    <resultMap id="BaseResultMap" type="com.newEng.greenpark.POJO.domain.NumberDomain">
+    <resultMap id="BaseResultMap" type="com.newEng.greenpark.pojo.domain.NumberDomain">
         <id column="ID" jdbcType="INTEGER" property="id"/>
         <result column="HISTORY_ID" jdbcType="VARCHAR" property="historyId"/>
         <result column="TIMESTAMP" jdbcType="BIGINT" property="timeStamp"/>
@@ -29,7 +29,7 @@
         where HISTORY_ID = #{historyId}
           and `TIMESTAMP` >= #{timeStamp}
     </select>
-    <select id="selectOne" resultType="com.newEng.greenpark.POJO.domain.NumberDomain">
+    <select id="selectOne" resultType="com.newEng.greenpark.pojo.domain.NumberDomain">
         select *
         from HISTORYNUMERICTRENDRECORD
         where HISTORY_ID = #{historyId}
